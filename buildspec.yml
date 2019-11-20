@@ -1,94 +1,20 @@
-AWSTemplateFormatVersion: 2010-09-09
-Description: AWS CodeBuild Template for GitHub Pull Requests
-Parameters:
-  GitHubOwner:
-    Description: GitHub repository owner
-    Type: String
-    Default: Beneficient
-  GitHubRepo:
-    Description: GitHub repository
-    Type: String
-    Default: bcp-dataart
-  GitHubBranch:
-    Description: GitHub branch
-    Type: String
-    Default: master
-  ArtifactS3Bucket:
-    Description: Shared S3 Bucket for CodePipeline artifacts
-    Type: String
-    Default: codepipeline-us-east-1-390634371349
-Resources:
-  CodeBuildProject:
-    Type: 'AWS::CodeBuild::Project'
-    Properties:
-      Name: PullRequest-bcp-dataart
-      Description: GitHub Pull Request build and test
-      ServiceRole: !GetAtt CodeBuildServiceRole.Arn
-      Artifacts:
-        Type: S3
-        Location: !Ref ArtifactS3Bucket
-        Name: !Sub CodeBuild-${GitHubRepo}
-      Environment:
-        Type: LINUX_CONTAINER
-        ComputeType: BUILD_GENERAL1_SMALL
-        Image: 'aws/codebuild/standard:2.0'
-      Source:
-        Auth:
-          Type: OAUTH
-        BuildSpec: BCP/BCP.CICD/testspec-pull-request.yml
-        GitCloneDepth: 1
-        ReportBuildStatus: true
-        Location: !Sub https://github.com/${GitHubOwner}/${GitHubRepo}.git
-        Type: GITHUB
-      Triggers:
-        FilterGroups:
-          - - Type: EVENT
-              Pattern: PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
-            - Type: BASE_REF
-              Pattern: !Sub ^refs/heads/${GitHubBranch}$
-              ExcludeMatchedPattern: false
-        Webhook: true
-      TimeoutInMinutes: 10
-      Tags:
-        - Key: Name
-          Value: !Sub 'Build-${AWS::StackName}'
-  CodeBuildServiceRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: 2012-10-17
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - codebuild.amazonaws.com
-            Action: 'sts:AssumeRole'
-      Path: /
-      Policies:
-        - PolicyName: CodeBuildAccessPolicy
-          PolicyDocument:
-            Version: 2012-10-17
-            Statement:
-              - Effect: Allow
-                Action:
-                  - codebuild:BatchGetBuilds
-                  - codebuild:StartBuild
-                Resource: !Sub 'arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:table/*'
-              - Effect: Allow
-                Action:
-                  - iam:PassRole
-                Resource: '*'
-              - Action:
-                  - logs:CreateLogGroup
-                  - logs:CreateLogStream
-                  - logs:PutLogEvents
-                Resource:
-                  - Fn::Sub: arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/*
-                Effect: Allow
-              - Action:
-                  - s3:PutObject
-                  - s3:PutObjectAcl
-                Resource:
-                  - !Sub arn:aws:s3:::${ArtifactS3Bucket}/CodeBuild-${GitHubRepo}
-                  - !Sub arn:aws:s3:::${ArtifactS3Bucket}/CodeBuild-${GitHubRepo}/*
-                Effect: Allow
+---
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      dotnet: 2.2
+  build:
+    commands:
+      #- for lambda_func in BCP/*/Function*.cs; do cd $(dirname $lambda_func) && dotnet build && cd ../..; done
+  post_build:
+    commands:
+      #- dotnet test BCP/BCP.sln -l:"trx;LogFileName=TestResult.trx"
+    finally:
+      #- mkdir -p "TestResults/$CODEBUILD_SOURCE_VERSION/$CODEBUILD_START_TIME"
+      #- cd BCP; for folder in *.Tests; do for filename in $folder/*/*.trx; do cp "$filename" "../TestResults/$CODEBUILD_SOURCE_VERSION/$CODEBUILD_START_TIME/$folder.trx"; done || true; done; cd ..
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: no
+  base-directory: TestResults
