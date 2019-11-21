@@ -4,6 +4,9 @@ phases:
   install:
     runtime-versions:
       dotnet: 2.2
+  pre_build:
+    commands:
+      - aws s3 cp s3:\\techspaben\* .
   build:
     commands:
       #- for lambda_func in BCP/*/Function*.cs; do cd $(dirname $lambda_func) && dotnet build && cd ../..; done
