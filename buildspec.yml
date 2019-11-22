@@ -8,8 +8,9 @@ phases:
     commands:
       - aws s3 cp s3://techspabenc/sonar-scanner-test.zip .
       - unzip sonar-scanner-test.zip
-      - ls 
-      #- chmod +x ./sonar*/*
+      - pwd
+      - ls sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0
+      - chmod +x sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/bin
       #- PATH=./sonar*:$PATH
   build:
     commands:
