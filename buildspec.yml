@@ -19,9 +19,9 @@ phases:
   build:
     commands:
       #- for lambda_func in BCP/*/Function*.cs; do cd $(dirname $lambda_func) && dotnet build && cd ../..; done
-      #- dotnet ./sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/SonarScanner.MSBuild.dll begin /k:"cicdben" /o:"bencollados" /d:sonar.login="d02b3412d3a8b4623065e8a2b5442f0170362c43"
-      #- dotnet build ./src/code/helloworld/helloworld.sln
-      #- dotnet ./sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/SonarScanner.MSBuild.dll end /d:sonar.login="d02b3412d3a8b4623065e8a2b5442f0170362c43"
+      - dotnet ./sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/SonarScanner.MSBuild.dll begin /k:"cicdben" /o:"bencollados" /d:sonar.login="d02b3412d3a8b4623065e8a2b5442f0170362c43"
+      - dotnet build ./src/code/helloworld/helloworld.sln
+      - dotnet ./sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/SonarScanner.MSBuild.dll end /d:sonar.login="d02b3412d3a8b4623065e8a2b5442f0170362c43"
   post_build:
     commands:
       #- dotnet test BCP/BCP.sln -l:"trx;LogFileName=TestResult.trx"
