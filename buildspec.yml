@@ -11,7 +11,7 @@ phases:
       - pwd
       - ls sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0
       - chmod +x sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/sonar-scanner-4.1.0.1829/bin
-      #- PATH=./sonar*:$PATH
+      - PATH=$PATH:$sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0
   build:
     commands:
       #- for lambda_func in BCP/*/Function*.cs; do cd $(dirname $lambda_func) && dotnet build && cd ../..; done
