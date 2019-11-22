@@ -13,14 +13,15 @@ phases:
       - ls ./src/sonarcloud
       - ls sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0
       - chmod +x sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/sonar-scanner-4.1.0.1829/bin
+      - ls -la sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/sonar-scanner-4.1.0.1829
       - PATH=$PATH:$(pwd)/sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0
       - echo $PATH
   build:
     commands:
       #- for lambda_func in BCP/*/Function*.cs; do cd $(dirname $lambda_func) && dotnet build && cd ../..; done
-      - dotnet ./sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/SonarScanner.MSBuild.dll begin /k:"cicdben" /o:"bencollados" /d:sonar.login="d02b3412d3a8b4623065e8a2b5442f0170362c43"
-      - dotnet build ./src/code/helloworld/helloworld.sln
-      - dotnet ./sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/SonarScanner.MSBuild.dll end /d:sonar.login="d02b3412d3a8b4623065e8a2b5442f0170362c43"
+      #- dotnet ./sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/SonarScanner.MSBuild.dll begin /k:"cicdben" /o:"bencollados" /d:sonar.login="d02b3412d3a8b4623065e8a2b5442f0170362c43"
+      #- dotnet build ./src/code/helloworld/helloworld.sln
+      #- dotnet ./sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/SonarScanner.MSBuild.dll end /d:sonar.login="d02b3412d3a8b4623065e8a2b5442f0170362c43"
   post_build:
     commands:
       #- dotnet test BCP/BCP.sln -l:"trx;LogFileName=TestResult.trx"
