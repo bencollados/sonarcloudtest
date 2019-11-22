@@ -6,10 +6,11 @@ phases:
       dotnet: 2.2
   pre_build:
     commands:
-      - aws s3 cp s3:\\techspaben\* .
-      - unzip sonar*
-      - chmod +x ./sonar*/*
-      - PATH=./sonar*:$PATH
+      - aws s3 cp s3://techspabenc/sonar-scanner-test.zip .
+      - unzip sonar-scanner-test.zip
+      - ls ./sonar-scanner-test
+      #- chmod +x ./sonar*/*
+      #- PATH=./sonar*:$PATH
   build:
     commands:
       #- for lambda_func in BCP/*/Function*.cs; do cd $(dirname $lambda_func) && dotnet build && cd ../..; done
