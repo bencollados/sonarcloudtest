@@ -8,7 +8,7 @@ phases:
     commands:
       - aws s3 cp s3://techspabenc/sonar-scanner-test.zip .
       - unzip sonar-scanner-test.zip
-      - ls ./sonar-scanner-test
+      - ls 
       #- chmod +x ./sonar*/*
       #- PATH=./sonar*:$PATH
   build:
