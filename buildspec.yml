@@ -24,11 +24,11 @@ phases:
       - unzip ./src/code/sonar-scanner-test.zip
       - ls -la ./src/code/
       - ls
-      #- ls sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0
-      #- chmod +x sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/sonar-scanner-4.1.0.1829/bin/sonar*
-      #- ls -la sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/sonar-scanner-4.1.0.1829/bin
-      #- PATH=$PATH:$(pwd)/sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0
-      #- echo $PATH
+      - ls sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0
+      - chmod +x sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/sonar-scanner-4.1.0.1829/bin/sonar*
+      - ls -la sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/sonar-scanner-4.1.0.1829/bin
+      - PATH=$PATH:$(pwd)/sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0
+      - echo $PATH
   build:
     commands:
       #- for lambda_func in BCP/*/Function*.cs; do cd $(dirname $lambda_func) && dotnet build && cd ../..; done
