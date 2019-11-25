@@ -6,29 +6,29 @@ phases:
       dotnet: 2.2
   pre_build:
     commands:
-      #- aws s3 cp s3://techspabenc/sonar-scanner-test.zip .
-      #- unzip sonar-scanner-test.zip
-      #- pwd
-      #- ls
-      #- ls ./src/sonarcloud
-      #- ls sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0
-      #- chmod +x sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/sonar-scanner-4.1.0.1829/bin/sonar*
-      #- ls -la sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/sonar-scanner-4.1.0.1829/bin
-      #- PATH=$PATH:$(pwd)/sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0
-      #- echo $PATH
-      
-      #- aws s3 cp s3://techspabenc/sonar-scanner-test.zip .      
-      #- pwd
-      - ls -la
-      - ls -la ./src/code
-      - unzip ./src/code/sonar-scanner-test.zip
-      - ls -la ./src/code/
+      - aws s3 cp s3://techspabenc/sonar-scanner-test.zip .
+      - unzip sonar-scanner-test.zip
+      - pwd
       - ls
+      - ls ./src/sonarcloud
       - ls sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0
       - chmod +x sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/sonar-scanner-4.1.0.1829/bin/sonar*
       - ls -la sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/sonar-scanner-4.1.0.1829/bin
       - PATH=$PATH:$(pwd)/sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0
       - echo $PATH
+      
+      #- aws s3 cp s3://techspabenc/sonar-scanner-test.zip .      
+      #- pwd
+      #- ls -la
+      #- ls -la ./src/code
+      #- unzip ./src/code/sonar-scanner-test.zip
+      #- ls -la ./src/code/
+      #- ls
+      #- ls sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0
+      #- chmod +x sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/sonar-scanner-4.1.0.1829/bin/sonar*
+      #- ls -la sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0/sonar-scanner-4.1.0.1829/bin
+      #- PATH=$PATH:$(pwd)/sonar-scanner-msbuild-4.7.1.2311-netcoreapp2.0
+      #- echo $PATH
   build:
     commands:
       #- for lambda_func in BCP/*/Function*.cs; do cd $(dirname $lambda_func) && dotnet build && cd ../..; done
